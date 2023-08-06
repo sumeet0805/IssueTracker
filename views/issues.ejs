@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Tracker Application</title>
+    <link rel="stylesheet" href="/home.css">
+    <script src="/issues.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Issue Tracker Application</h1>
+    </header>
+    <main>
+        <button class="create-project-btn" onclick="openPopup()">Create Issue</button>
+        <h3>Filter Issues</h3>
+        <form action="/issues/filter" method="post">
+            <label for="title">Title:</label>
+            <input type="text" name="title">
+            <label for="author">Author:</label>
+            <input type="text" name="author">
+            <label for="description">Description:</label>
+            <input type="text" name="description">
+            <label for="projectName">Project Name:</label>
+            <input type="text" name="projectName">
+            <button type="submit">Filter</button>
+        </form>
+        <div class="project-list">
+            <% for(let i of issue_list) { %>
+                <div class="project-card">
+                    <h3>
+                        <%= i.title %>
+                    </h3>
+                    <p>
+                    <h4>Project Description:</h4>
+                    <%= i.description %>
+                        </p>
+                        <p>
+                        <h4>Project Author:</h4>
+                        <%= i.author %>
+                            </p>
+                            <br>
+                            <a class="remove-button" href="/delete-issues/<%= i.title %>">Remove Issue</a>
+                </div>
+                <% } %>
+        </div>
+
+    </main>
+    <div class="popup" id="popup">
+        <div class="popup-form">
+            <form action="/createIssue" method="POST">
+                <label for="project-name">Issue title:</label>
+                <input type="text" name="ptitle" id="name" required>
+                <label for="project-description">Project Description:</label>
+                <input type="text" name="pdescription" id="description" required>
+                <label for="project-author">Select Project:</label>
+                <select name="project" required>
+                    <!-- Generate the dropdown options dynamically -->
+                    <% Project_list.forEach(project=> { %>
+                        <option value="<%= project.name %>">
+                            <%= project.name %>
+                        </option>
+                        <% }) %>
+                </select>
+                <label for="project-author">Author:</label>
+                <input type="text" name="pauthor" id="author" required>
+                <button type="submit">Create</button>
+                <button onclick="closePopup()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Tracker Application</title>
+    <link rel="stylesheet" href="/home.css">
+    <script src="/home.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Issue Tracker Application</h1>
+    </header>
+    <main>
+        <button class="create-project-btn" onclick="openPopup()">Create Project</button>
+        <a class="create-issue-btn" href="/issues">Issue List</a> 
+        <div class="project-list">
+            <% for(let i of project_list) { %>
+                <div class="project-card">
+                    <h3>
+                        <%= i.name %>
+                    </h3>
+                    <p>
+                    <p>Project Description:</p>
+                    <%= i.description %>
+                        </p>
+                        <p>
+                        <p>Project Author:</p>
+                        <%= i.author %>
+                            </p>
+                            <br>
+                            <a class="remove-button" href="/delete-project/<%= i.name %>">Remove Project</a>
+                </div>
+                <% } %>
+        </div>
+    </main>
+    <div class="popup" id="popup">
+        <div class="popup-form">
+            <form action="/createProject" method="POST">
+                <label for="project-name">Project Name:</label>
+                <input type="text" name="pname" id="name" required>
+                <label for="project-description">Project Description:</label>
+                <input type="text" name="pdescription" id="description" required>
+                <label for="project-author">Author:</label>
+                <input type="text" name="pauthor" id="author" required>
+                <button type="submit">Create</button>
+                <button onclick="closePopup()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
